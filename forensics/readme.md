@@ -96,9 +96,11 @@ KAPE Collection
 
 ### 1. User & System Profile
 
-**Q: What user profile was used during this event?**  
-> 🔍 *Artifact: Registry — `SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList`*  
-> **A:** `[YOUR ANSWER]`
+**Q: What user profile was used during this event?**
+> 🔍 *Artifact: Registry — ProfileList*
+**A: Vickey**
+
+![ProfileList showing Vickey user profile](./screenshots/Screenshot_1.png)
 
 ---
 
