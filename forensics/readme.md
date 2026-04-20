@@ -103,7 +103,7 @@ KAPE Collection
 > 🔍 *Artifact: Registry — ProfileList*
 > **A: Vickey**
 
-![ProfileList showing Vickey user profile](./screenshots/Screenshot_1.png)
+![](./screenshots/Screenshot_1.png)
 
 ---
 
@@ -112,7 +112,7 @@ KAPE Collection
 **Q: What browser does the user primarily use?**  
 > **A:** `Google Chrome`
 
-![ProfileList showing Vickey user profile](./screenshots/Screenshot_2.png)
+![](./screenshots/Screenshot_2.png)
 
 ---
 
@@ -120,14 +120,14 @@ KAPE Collection
 > 🔍 *Artifact: Browser history*  
 > **A:** `Gmail`
 
-![ProfileList showing Vickey user profile](./screenshots/Screenshot_3.png)
+![](./screenshots/Screenshot_3.png)
 
 ---
 
 **Q: What email address was the user using?**  
 > **A:** `8ugz.mail@gmail.com`
 
-![ProfileList showing Vickey user profile](./screenshots/Screenshot_3.png)
+![](./screenshots/Screenshot_3.png)
 
 ---
 
@@ -135,14 +135,141 @@ KAPE Collection
 > 🔍 *Artifact: Browser downloads history*  
 > **A:** `new.zip`
 
-![ProfileList showing Vickey user profile](./screenshots/Screenshot_4.png)
-![ProfileList showing Vickey user profile](./screenshots/Screenshot_5.png)
+![](./screenshots/Screenshot_4.png)
+![](./screenshots/Screenshot_5.png)
 
 ---
 
-**Q: How did the user access espn.com?**  
-> 🔍 *Artifact: Browser history — check transition type (typed / link / redirect)*  
-> **A:** `[YOUR ANSWER]`
+**Q: What tool did the user download?**
+**A:** `Teamviewer`
+
+![](./screenshots/Screenshot_6.png)
+![](./screenshots/Screenshot_7.png)
+
+---
+
+**Q: How did the user initially access the site for remote management tool?**
+**A:** `Typed URL`
+
+![](./screenshots/Screenshot_8.png)
+
+---
+
+**Q: How did the user access espn.com?**
+**A:** `Link`
+
+![](./screenshots/Screenshot_9.png)
+
+---
+
+**Q: What ransomware family did CISA report on in the article on Bleeping Computer?**
+**A:** `Black Basta`
+
+![](./screenshots/Screenshot_10.png)
+
+---
+
+**Q: Is there a persistence mechanism?**
+**A:** `Yes`
+
+---
+
+**Q: If yes, what is the flag for the persistence mechanism?**
+> 🔍 *Artifact: Persistence Run key in Registry Explorer*  
+**A:** `FLAG061`
+
+![](./screenshots/Screenshot_11.png)
+
+---
+
+**Q: Is prefetch enabled on the system?**
+**A:** `Yes`
+
+![](./screenshots/Screenshot_12.png)
+
+---
+
+**Q: Was command and control beacon established?**
+> 🔍 *Artifact: C2 beacon network connection in Sysmon logs*  
+**A:** `Yes`
+
+---
+
+**Q: If C2 was established, what is the name of the beacon?**
+**A:** `COURAGEOUS_DRAGSTER.exe`
+
+![](./screenshots/Screenshot_13.png)
+
+---
+
+**Q: What was the flag placed in the Downloads folder at 2024-05-15 12:36:40.830 (UTC)?**
+**A:** `FLAG007`
+
+![](./screenshots/Screenshot_14.png)
+
+---
+
+**Q: What was the flag downloaded to the Downloads folder at 2024-05-15 12:39:01.615 (UTC)?**
+**A:** `FLAG714`
+
+![](./screenshots/Screenshot_15.png)
+
+---
+
+**Q: What enumeration command was executed at 2024-05-15 12:45:21.857 (UTC)? [Command 1]**
+**A:** `whoami`
+
+![](./screenshots/Screenshot_16.png)
+
+---
+
+**Q: What enumeration command was executed at 2024-05-15 12:45:40.962 (UTC)?**
+**A:** `ipconfig`
+
+![](./screenshots/Screenshot_17.png)
+
+---
+
+**Q: What executable was used to download the C2 beacon?**
+**A:** `certutil.exe`
+
+![](./screenshots/Screenshot_18.png)
+
+---
+
+**Q: What IP address was FLAG734 downloaded from?**
+**A:** `[YOUR ANSWER]`
+
+![](./screenshots/Screenshot_19.png)
+
+---
+
+**Q: What is the file path for where FLAG734 was downloaded to?**
+**A:** `C:\Windows\Temp`
+
+![](./screenshots/Screenshot_20.png)
+
+---
+
+**Q: What port number did the reverse shell use?**
+**A:** `1337`
+
+![](./screenshots/Screenshot_21.png)
+
+---
+
+**Q: What is the IP address for raw.githubusercontent.com?**
+**A:** `185.199.108.133`
+
+![](./screenshots/Screenshot_22.png)
+![](./screenshots/Screenshot_23.png)
+
+---
+
+**Q: What was the name of the malware that was restored from quarantine?**
+**A:** `VirTool:Win32/Sliver.D!MTB`
+
+![](./screenshots/Screenshot_24.png)
 
 ---
 
