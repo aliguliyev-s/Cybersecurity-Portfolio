@@ -6,28 +6,6 @@
 **Investigator:** *Samir Aliguliyev*  
 **Status:** ✅ Complete
 
----
-
-## 📋 Table of Contents
-
-1. [Scenario](#scenario)
-2. [Investigation Methodology](#investigation-methodology)
-3. [Tools Used](#tools-used)
-4. [Timeline of Events](#timeline-of-events)
-5. [Findings — Q&A](#findings--qa)
-   - [User & System Profile](#1-user--system-profile)
-   - [Browser & Email Forensics](#2-browser--email-forensics)
-   - [Malware & Remote Access](#3-malware--remote-access)
-   - [C2 & Network Activity](#4-c2--network-activity)
-   - [Persistence Mechanism](#5-persistence-mechanism)
-   - [Enumeration Commands](#6-enumeration-commands)
-   - [CTF Flags](#7-ctf-flags)
-6. [MITRE ATT&CK Mapping](#mitre-attck-mapping)
-7. [Screenshots](#screenshots)
-8. [Lessons Learned](#lessons-learned)
-
----
-
 ## Scenario
 
 A user self-reported receiving a suspicious email on **15 May 2024** claiming she was being charged for a **Geek Squad subscription renewal**. She never had such a subscription.
@@ -44,17 +22,6 @@ She complied. ~30–45 minutes later, a co-worker urged her to report it to the 
 
 ## Investigation Methodology
 
-```
-KAPE Collection
-      │
-      ├── Browser Artifacts     → Chrome/Edge/Firefox history, downloads, cache
-      ├── Registry Hives        → NTUSER.DAT, SOFTWARE, SYSTEM
-      ├── Prefetch Files        → Execution evidence
-      ├── $MFT / File System    → File creation/modification timestamps
-      ├── Event Logs            → Windows Security/System/Application logs
-      └── Scheduled Tasks / Run Keys → Persistence mechanisms
-```
-
 ---
 
 ## Tools Used
@@ -64,34 +31,13 @@ KAPE Collection
 | **KAPE** | Triage collection |
 | **Registry Explorer** | Parse registry hives (NTUSER.DAT, SOFTWARE) |
 | **MFTECmd** | Parse $MFT for file timeline |
-| **LECmd** | Parse LNK / shortcut files |
-| **PECmd** | Parse Prefetch files |
 | **BrowsingHistoryView** | Browser history analysis |
 | **Hindsight** | Chrome/Edge browser artifact analysis |
 | **EZViewer** | View parsed artifact files (CSV, JSON) |
 | **Timeline Explorer** | Visualize and filter MFT/event timelines |
 | **Event Log Explorer** | Windows event log analysis |
-
----
-
-## Timeline of Events
-
-| Time (UTC) | Event |
-|------------|-------|
-| ~Morning | User receives phishing email (Geek Squad renewal) |
-| *TBD* | User calls number from email |
-| *TBD* | User visits remote access tool website |
-| *TBD* | Remote access tool downloaded & executed |
-| *TBD* | Attacker gains remote access |
-| 2024-05-15 12:36:40 | FLAG planted in Downloads folder |
-| 2024-05-15 12:39:01 | Second file downloaded to Downloads folder |
-| 2024-05-15 12:45:21 | Enumeration command #1 executed |
-| 2024-05-15 12:45:21 | Enumeration command #2 executed |
-| 2024-05-15 12:45:40 | Enumeration command #3 executed |
-| *TBD* | C2 beacon established |
-| *TBD* | Malware restored from AV quarantine |
-| *TBD* | User reports to co-worker → SOC alerted |
-| *TBD* | System taken offline |
+shellbags explorer
+regripper
 
 ---
 
@@ -223,7 +169,7 @@ KAPE Collection
 
 ---
 
-**Q: What enumeration command was executed at 2024-05-15 12:45:40.962 (UTC)?**
+**Q: What enumeration command was executed at 2024-05-15 12:45:40.962 (UTC)? [Command 2]**
 **A:** `ipconfig`
 
 ![](./screenshots/Screenshot_17.png)
@@ -238,7 +184,7 @@ KAPE Collection
 ---
 
 **Q: What IP address was FLAG734 downloaded from?**
-**A:** `[YOUR ANSWER]`
+**A:** `192.168.1.198`
 
 ![](./screenshots/Screenshot_19.png)
 
@@ -273,36 +219,38 @@ KAPE Collection
 
 ---
 
-## MITRE ATT&CK Mapping
+**Q: What time was TeamViewer executed?**
+> 🔍 *Artifact: TeamViewer execution time in UserAssist*  
+**A:** `2024-05-15 12:32:11`
 
-| Tactic | Technique | ID | Evidence |
-|--------|-----------|----|---------|
-| Initial Access | Phishing | T1566.002 | Geek Squad email with callback number |
-| Execution | User Execution | T1204 | User downloaded & ran remote access tool |
-| Command & Control | Remote Access Software | T1219 | Remote access tool installed by attacker |
-| Command & Control | Ingress Tool Transfer | T1105 | C2 beacon downloaded via executable |
-| Discovery | System Owner/User Discovery | T1033 | Enumeration commands executed |
-| Discovery | System Network Config Discovery | T1016 | Enumeration commands executed |
-| Persistence | *TBD* | *TBD* | Registry Run key / Scheduled Task |
-| Defense Evasion | Restore from Quarantine | T1562 | Malware restored from Defender quarantine |
+![](./screenshots/Screenshot_25.png)
 
 ---
 
-## Lessons Learned
+**Q: What time (in UTC) did the TeamViewer session end?**
+**A:** `2024-05-15 12:47:40.553`
 
-### 🔴 Attacker Techniques Observed
-- **Tech Support Scam** is a classic social engineering vector — urgency + fear drives victim compliance
-- Attacker used legitimate remote access software to avoid initial AV detection
-- C2 beacon was downloaded and executed **after** gaining initial access via the legitimate RAT
-- Malware was **restored from AV quarantine** — attacker had enough access to interact with Defender
+![](./screenshots/Screenshot_26.png)
 
-### 🔵 Defensive Recommendations
-- Block unknown remote access tools at endpoint (application allowlisting)
-- Alert on AV quarantine restore events (Event ID 1009 / Defender logs)
-- Require VPN for all corporate endpoints — would have enabled SIEM visibility
-- User awareness training for callback phishing (vishing)
+---
 
-### 🟡 Forensic Notes
-- KAPE triage was effective even without network telemetry
-- $MFT timestamps were critical for establishing the attack timeline
-- Prefetch files confirmed execution of tools that left no other trace
+**Q: What did the malicious actor disable shortly after making the remote connection?**
+**A:** `Microsoft Defender Antivirus Real-time Protection`
+
+![](./screenshots/Screenshot_27.png)
+
+---
+
+**Q: What is the name of the .zip file accessed at 2024-05-15 12:30:10?**
+**A:** `new.zip`
+
+![](./screenshots/Screenshot_28.png)
+
+---
+
+**Q: What is the flag in the Temp directory that was last accessed at 2024-05-15 12:43:32?**
+**A:** `FLAG099`
+
+![](./screenshots/Screenshot_29.png)
+
+---
