@@ -1,4 +1,4 @@
-# 🔍 Case 01 — Geek Squad Phishing → Remote Access → C2 Compromise
+# 🔍 Case 01 - Geek Squad Phishing → Remote Access → C2 Compromise
 
 **Date of Incident:** 2024-05-15
 
@@ -17,7 +17,7 @@
 1. [Scenario](#scenario)
 2. [Investigation Methodology](#investigation-methodology)
 3. [Tools Used](#tools-used)
-4. [Findings — Q&A](#findings--qa)
+4. [Findings - Q&A](#findings--qa)
 5. [MITRE ATT&CK Mapping](#mitre-attck-mapping)
 6. [Lessons Learned](#lessons-learned)
 
@@ -29,11 +29,11 @@ A user self-reported receiving a suspicious email on **15 May 2024** claiming sh
 
 The email warned she had 24 hours to cancel. She called the listed number and was instructed to:
 1. Visit a website
-2. Download software granting remote access to her computer — supposedly to "remove Geek Squad access software"
+2. Download software granting remote access to her computer - supposedly to "remove Geek Squad access software"
 
 She complied. ~30–45 minutes later, a co-worker urged her to report it to the SOC immediately.
 
-**SOC Response:** System was taken offline and a triage collection was performed using **KAPE**. The user was **not connected to VPN** during the event — no SIEM data or PCAP available. Investigation is **artifact-only**.
+**SOC Response:** System was taken offline and a triage collection was performed using **KAPE**. The user was **not connected to VPN** during the event - no SIEM data or PCAP available. Investigation is **artifact-only**.
 
 ---
 
@@ -69,12 +69,12 @@ KAPE Collection
 
 ---
 
-## Findings — Q&A
+## Findings - Q&A
 
 ### 1. User & System Profile
 
 **Q: What user profile was used during this event?**
-> 🔍 *Artifact: Registry — ProfileList*
+> 🔍 *Artifact: Registry - ProfileList*
 **A:** `Vickey`
 
 ![User profile in Registry ProfileList](./screenshots/Screenshot_1.png)
@@ -158,7 +158,7 @@ KAPE Collection
 ---
 
 **Q: What time was TeamViewer executed?**
-> 🔍 *Artifact: NTUSER.DAT — UserAssist (parsed via RegRipper)*
+> 🔍 *Artifact: NTUSER.DAT - UserAssist (parsed via RegRipper)*
 **A:** `2024-05-15 12:32:11`
 
 ![TeamViewer execution time in UserAssist](./screenshots/Screenshot_25.png)
@@ -192,7 +192,7 @@ KAPE Collection
 **A:** `Yes`
 
 **Q: If yes, what is the flag for the persistence mechanism?**
-> 🔍 *Artifact: NTUSER.DAT — Software\Microsoft\Windows\CurrentVersion\Run (Registry Explorer)*
+> 🔍 *Artifact: NTUSER.DAT - Software\Microsoft\Windows\CurrentVersion\Run (Registry Explorer)*
 **A:** `FLAG061`
 
 ![Persistence Run key in Registry Explorer](./screenshots/Screenshot_11.png)
@@ -290,11 +290,11 @@ KAPE Collection
 
 | Tactic | Technique | ID | Evidence |
 |--------|-----------|----|---------|
-| Initial Access | Phishing — Spearphishing via Service | T1566.002 | Geek Squad renewal email with callback number |
+| Initial Access | Phishing - Spearphishing via Service | T1566.002 | Geek Squad renewal email with callback number |
 | Execution | User Execution | T1204 | User downloaded and ran TeamViewer |
-| Defense Evasion | Impair Defenses — Disable or Modify Tools | T1562.001 | Attacker disabled Microsoft Defender Real-time Protection |
-| Defense Evasion | Impair Defenses — Restore from Quarantine | T1562 | `VirTool:Win32/Sliver.D!MTB` restored from Defender quarantine |
-| Persistence | Boot or Logon Autostart — Registry Run Keys | T1547.001 | FLAG061 found in `HKCU\...\CurrentVersion\Run` |
+| Defense Evasion | Impair Defenses - Disable or Modify Tools | T1562.001 | Attacker disabled Microsoft Defender Real-time Protection |
+| Defense Evasion | Impair Defenses - Restore from Quarantine | T1562 | `VirTool:Win32/Sliver.D!MTB` restored from Defender quarantine |
+| Persistence | Boot or Logon Autostart - Registry Run Keys | T1547.001 | FLAG061 found in `HKCU\...\CurrentVersion\Run` |
 | Discovery | System Owner/User Discovery | T1033 | `whoami` executed at 12:45:21 |
 | Discovery | System Network Configuration Discovery | T1016 | `ipconfig` executed at 12:45:40 |
 | Command & Control | Remote Access Software | T1219 | TeamViewer used for initial remote access |
@@ -306,19 +306,19 @@ KAPE Collection
 ## Lessons Learned
 
 ### 🔴 Attacker Techniques Observed
-- **Tech Support Scam** is a classic social engineering vector — urgency + fear drives victim compliance
+- **Tech Support Scam** is a classic social engineering vector - urgency + fear drives victim compliance
 - Attacker used **legitimate remote access software** (TeamViewer) to avoid initial AV detection
-- **Defender was disabled immediately** after gaining access — first priority for the attacker
-- `certutil.exe` — a legitimate Windows binary — was abused to download the C2 beacon (Living off the Land)
+- **Defender was disabled immediately** after gaining access - first priority for the attacker
+- `certutil.exe` - a legitimate Windows binary - was abused to download the C2 beacon (Living off the Land)
 - C2 beacon (`COURAGEOUS_DRAGSTER.exe`) established persistent network communication via Sliver framework
-- Malware was **restored from AV quarantine** — attacker had enough access to interact with Defender
+- Malware was **restored from AV quarantine** - attacker had enough access to interact with Defender
 
 ### 🔵 Defensive Recommendations
 - Block or alert on unknown remote access tools at endpoint (application allowlisting)
 - Alert on `certutil.exe` making outbound network connections (LOLBAS abuse)
 - Alert on AV quarantine restore events (Defender Event ID 1009)
 - Alert on Defender Real-time Protection being disabled (Defender Event ID 5001)
-- Require VPN for all corporate endpoints — would have enabled SIEM/PCAP visibility
+- Require VPN for all corporate endpoints - would have enabled SIEM/PCAP visibility
 - User awareness training focused on callback phishing (vishing)
 
 ### 🟡 Forensic Notes
