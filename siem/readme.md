@@ -17,7 +17,7 @@
 1. [Scenario](#scenario)
 2. [Investigation Methodology](#investigation-methodology)
 3. [Tools Used](#tools-used)
-4. [Findings - Q&A](#findings--qa)
+4. [Findings - Q&A](#findings---qa)
 5. [Lessons Learned](#lessons-learned)
 
 ---
@@ -30,20 +30,16 @@ The exercise focuses on the **initial access stage** of the campaign - covering 
 
 **Investigation scope:** Sysmon-based log analysis via Splunk SIEM. No PCAP or endpoint agent data available - artifact-only.
 
----
-
 ## Investigation Methodology
 
-Sysmon Event Logs → Splunk SIEM
-│
-├── Event ID 1  (Process Create)        → Malicious process identification
-├── Event ID 2  (File Creation Time)    → Timestomping detection
-├── Event ID 3  (Network Connect)       → C2 / domain check activity
-├── Event ID 5  (Process Terminate)     → Self-termination timestamp
-├── Event ID 11 (File Create)           → Dropped files, paths, timestamps
-└── Event ID 22 (DNS Query)             → Dummy domain connectivity check
-
----
+| Event ID | Type                   | Purpose |
+|----------|------------------------|--------|
+| 1        | Process Create         | Malicious process identification |
+| 2        | File Creation Time     | Timestomping detection |
+| 3        | Network Connect        | C2 / domain check activity |
+| 5        | Process Terminate      | Self-termination timestamp |
+| 11       | File Create            | Dropped files, paths, timestamps |
+| 22       | DNS Query              | Dummy domain connectivity check |
 
 ## Tools Used
 
