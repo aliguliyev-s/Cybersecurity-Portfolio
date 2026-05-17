@@ -55,8 +55,8 @@ Alert: Suspicious IP Connection (146.185.170.222)
 
 | Tool | Purpose |
 |------|---------|
-| **Wireshark** | PCAP analysis — traffic filtering, file carving |
-| **Splunk** | Endpoint log analysis — event correlation |
+| **Wireshark** | PCAP analysis - traffic filtering, file carving |
+| **Splunk** | Endpoint log analysis - event correlation |
 | **VirusTotal** | File hash reputation and malware analysis |
 | **AbuseIPDB** | IP address reputation research |
 | **Shodan** | IP address OSINT |
@@ -65,12 +65,12 @@ Alert: Suspicious IP Connection (146.185.170.222)
 
 ## Findings - Q&A
 
-### Part 1 — PCAP Analysis
+### Part 1 - PCAP Analysis
 
 #### 1. Connection Confirmation
 
 **Q: Was there a successful connection to the suspicious IP address?**
-> 🔍 *Tool: Wireshark — filter: ip.addr == 146.185.170.222*
+> 🔍 *Tool: Wireshark - filter: ip.addr == 146.185.170.222*
 
 ```
 ip.addr == 146.185.170.222
@@ -85,7 +85,7 @@ ip.addr == 146.185.170.222
 #### 2. Malware Download
 
 **Q: Was malware downloaded? If so, what is the name of the malicious file(s)?**
-> 🔍 *Tool: Wireshark — HTTP objects / Follow TCP Stream*
+> 🔍 *Tool: Wireshark - HTTP objects / Follow TCP Stream*
 
 **A:** `Exfil.ps1, Keylogger.ps1`
 
@@ -127,13 +127,13 @@ Exfil.ps1 - C2A6AEB88D752077D90D3DF4A8F821D64423E4F8B5CC3F9305E06768F18BCD17`
 
 **A:** The attack uses two PowerShell scripts:
 
-**exfil.ps1** — Data exfiltration script that:
+**exfil.ps1** - Data exfiltration script that:
 - Collects system information via `systeminfo`
 - Copies Edge browser history from the user profile
 - Compresses collected data into `Exfil.zip`
 - Uploads the archive to attacker FTP server `192.168.8.151` using hardcoded credentials (`m122` / `SO1q2w!Q@W`)
 
-**keylogger.ps1** — Keylogger script that:
+**keylogger.ps1** - Keylogger script that:
 - Uses Windows API calls (`GetAsyncKeyState`, `MapVirtualKey`, `ToUnicode`) to capture every keystroke
 - Writes captured keystrokes to `C:\Windows\Temp\exfil\keylogger.txt`
 - Runs in an infinite loop until the output file is deleted
@@ -147,7 +147,7 @@ Exfil.ps1 - C2A6AEB88D752077D90D3DF4A8F821D64423E4F8B5CC3F9305E06768F18BCD17`
 #### 6. Data Exfiltration
 
 **Q: Was there any information stolen?**
-> 🔍 *Tool: Wireshark — Follow TCP/UDP Stream, check outbound traffic*
+> 🔍 *Tool: Wireshark - Follow TCP/UDP Stream, check outbound traffic*
 
 **A:** `Yes`
 
@@ -156,9 +156,9 @@ Exfil.ps1 - C2A6AEB88D752077D90D3DF4A8F821D64423E4F8B5CC3F9305E06768F18BCD17`
 #### 7. Exfiltration Method
 
 **Q: If so, how was information exfiltrated?**
-> 🔍 *Tool: Wireshark — Follow TCP Stream (FTP)*
+> 🔍 *Tool: Wireshark - Follow TCP Stream (FTP)*
 
-**A:** Data was exfiltrated via **FTP**. In Wireshark we can see the FTP command `STOR Exfil.zip` — the `STOR` command uploads a file to the FTP server, confirming that the compressed archive `Exfil.zip` was successfully sent to the attacker's server at `192.168.8.151`.
+**A:** Data was exfiltrated via **FTP**. In Wireshark we can see the FTP command `STOR Exfil.zip` - the `STOR` command uploads a file to the FTP server, confirming that the compressed archive `Exfil.zip` was successfully sent to the attacker's server at `192.168.8.151`.
 
 ![STOR Exfil.zip FTP command visible in Wireshark](./screenshots/Screenshot_7.png)
 
@@ -175,25 +175,25 @@ Exfil.ps1 - C2A6AEB88D752077D90D3DF4A8F821D64423E4F8B5CC3F9305E06768F18BCD17`
 
 ---
 
-### Part 2 — Splunk Analysis
+### Part 2 - Splunk Analysis
 
-#### 9. Persistence — Exfil
+#### 9. Persistence - Exfil
 
 **Q: What is the persistence mechanism for Exfil?**
-> 🔍 *Artifact: Splunk — Registry Event / CommandLine*
+> 🔍 *Artifact: Splunk - Registry Event / CommandLine*
 
-**A:** Registry Run Key — `exfil.ps1` was registered in `HKCU\SOFTWARE\Microsoft\CurrentVersion\Run` via `reg.exe`, ensuring it executes automatically and silently (`-WindowStyle hidden`) every time the user logs in.
+**A:** Registry Run Key - `exfil.ps1` was registered in `HKCU\SOFTWARE\Microsoft\CurrentVersion\Run` via `reg.exe`, ensuring it executes automatically and silently (`-WindowStyle hidden`) every time the user logs in.
 
 ![Exfil persistence Run Key in Splunk](./screenshots/Screenshot_9.png)
 
 ---
 
-#### 10. Persistence — Keylogger
+#### 10. Persistence - Keylogger
 
 **Q: What is the persistence mechanism for Keylogger?**
-> 🔍 *Artifact: Splunk — CommandLine*
+> 🔍 *Artifact: Splunk - CommandLine*
 
-**A:** `**A:** Registry Run Key — `Keylogger.ps1` was registered in `HKCU\SOFTWARE\Microsoft\CurrentVersion\Run` via `reg.exe`, ensuring it executes automatically and silently (`-WindowStyle hidden`) every time the user logs in.`
+**A:** `**A:** Registry Run Key - `Keylogger.ps1` was registered in `HKCU\SOFTWARE\Microsoft\CurrentVersion\Run` via `reg.exe`, ensuring it executes automatically and silently (`-WindowStyle hidden`) every time the user logs in.`
 
 ![Keylogger persistence Run Key in Splunk](./screenshots/Screenshot_10.png)
 
@@ -224,9 +224,9 @@ Exfil.ps1 - C2A6AEB88D752077D90D3DF4A8F821D64423E4F8B5CC3F9305E06768F18BCD17`
 
 ### 🔵 Defensive Recommendations
 - Block known malicious IPs at perimeter firewall using threat intel feeds
-- Alert on **new persistence mechanisms** — Registry Run keys, Scheduled Tasks
+- Alert on **new persistence mechanisms** - Registry Run keys, Scheduled Tasks
 - Monitor **outbound data transfers** especially to low-reputation IPs
-- Alert on **keylogger-like behaviour** — unusual file writes containing keystrokes
+- Alert on **keylogger-like behaviour** - unusual file writes containing keystrokes
 - Correlate **PCAP + endpoint logs** for complete incident picture
 
 ### 🟡 Forensic Notes
