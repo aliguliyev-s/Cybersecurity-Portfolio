@@ -1,4 +1,4 @@
-# 🛡️ Case 03 - Website Defacement | Po1s0n1vy Group vs imreallynotbatman.com
+# Website Defacement | Po1s0n1vy Group vs imreallynotbatman.com
 
 **Date of Incident:** Lab-based scenario (Splunk BOTS v1 dataset)
 
