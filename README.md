@@ -22,7 +22,7 @@ This portfolio documents real lab investigations, CTF writeups, and projects bui
 
 | # | Case | Tools | Status |
 |---|------|-------|--------|
-| 01 | [UltraVNC Backdoor Campaign](./siem/splunk/) | Splunk, Sysmon | ✅ Complete |
+| 01 | [UltraVNC Backdoor Campaign](./siem/splunk/case-02-ultravnc-backdoor/) | Splunk, Sysmon | ✅ Complete |
 
 ---
 
