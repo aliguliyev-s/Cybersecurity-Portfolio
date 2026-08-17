@@ -33,3 +33,12 @@ This portfolio documents real lab investigations, CTF writeups, and projects bui
 |---|------|-------|--------|
 | 01 | [Malicious IP - Reverse Shell](./Incident-Response/Case-01/) | Wireshark, Splunk | ✅ Complete |
 | 02 | [Keylogger & Data Exfiltration](./Incident-Response/Case-02/) | Wireshark, Splunk | ✅ Complete |
+| 03 | [Injection Series Part 3 - Paranoid](./Incident-Response/Case-03/) | ausearch, aureport | ✅ Complete |
+
+---
+
+### 🛠️ Reverse Engineering
+ 
+| # | Case | Tools | Status |
+|---|------|-------|--------|
+| 01 | [Injection Series Part 4](./Reverse-Engineering/btlo-injection-series-part-4/) | Ghidra | ✅ Complete |
