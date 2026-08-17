@@ -1,5 +1,5 @@
 # Humanitarian Aid Phishing | EZ-CERT Incident Response
-**Challenge:** [Add challenge name / link here]
+**Challenge:** [Poisoned Aid](https://blueteamlabs.online/home/investigation/poisoned-aid-763dd3e170)
 **Type:** Incident Response
 **Investigator:** *Samir Aliguliyev*
 **Status:** 🟡 In Progress
