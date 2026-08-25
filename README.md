@@ -15,7 +15,7 @@ This portfolio documents real lab investigations, CTF writeups, and projects bui
 | # | Case | Tools | Status |
 |---|------|-------|--------|
 | 01 | [Geek Squad Phishing → Remote Access → C2 Compromise](./forensics/geek_squad_phishing/) | KAPE, Registry Explorer, Splunk | ✅ Complete |
-| 02 | [Poisoned Aid](./forensics/btlo_poisoned_aid/) | KAPE, Wireshark, Registry Explorer, MFTECmd, Timeline Explorer | 🟡 In Progress |
+| 02 | [Poisoned Aid](./forensics/btlo_poisoned_aid/) | KAPE, Wireshark, Registry Explorer, MFTECmd, Timeline Explorer | ✅ Complete |
 
 ---
 
