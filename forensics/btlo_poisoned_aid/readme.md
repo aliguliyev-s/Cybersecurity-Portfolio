@@ -1,8 +1,8 @@
 # Humanitarian Aid Phishing | EZ-CERT Incident Response
-**Challenge:** [Poisoned Aid](https://blueteamlabs.online/home/investigation/poisoned-aid-763dd3e170)
+**Challenge:** [Poisoned Aid](https://blueteamlabs.online/achievement/share/167887/304#)
 **Type:** Incident Response
 **Investigator:** *Samir Aliguliyev*
-**Status:** 🟡 In Progress
+**Status:** ✅ Complete
 ---
 
 ## Scenario
@@ -106,22 +106,41 @@ To figure out where this tracking data might be stored, I opened the WindowsHelp
 ---
 
 **Q9: Looking at the PCAP, a significant volume of data left Khaled's machine without authorization. What was the total size of the exfiltrated data in megabytes?**
-**A:** *Answer pending.*
+
+Opening the same .pcapng file, I filtered the traffic with ip.src == 192.168.9.128 && ip.dst == 159.198.41.140, then checked Statistics - Conversations, which shows that 13 MB were transferred from Khaled's machine to the attacker's server.
+
+**A:** *13 MB*
+
+![](./screenshots/Screenshot_11.png)
 
 ---
 
 **Q10: Every file Khaled unknowingly handed over was sent to a specific endpoint on the attacker's server. What endpoint was used to receive the exfiltrated files?**
-**A:** *Answer pending.*
+
+Searching a bit further inside the WindowsHelper directory, I found a file named browser_debug.log. Inside it, the endpoint used to upload the harvested files is visible.
+
+**A:** */upload_file*
+
+![](./screenshots/Screenshot_12.png)
 
 ---
 
-**Q11: Among everything the infostealer quietly harvested in the background, it captured clipboard data containing credentials for Khaled's password manager — giving the attacker direct access to his most sensitive accounts. What email and master password did the attacker obtain to access the password manager?**
-**A:** *Answer pending.*
+**Q11: Among everything the infostealer quietly harvested in the background, it captured clipboard data containing credentials for Khaled's password manager - giving the attacker direct access to his most sensitive accounts. What email and master password did the attacker obtain to access the password manager?**
+
+A fairly tricky one. Searching inside the WindowsHelper directory, I found a file named keystrokes_log.txt, which contains AmT1redAlfr3d - most likely the master password. To find the associated email, I then navigated to C:\Users\BTLOTest\Desktop\Artefacts\Poisoned Aid\C\Users\khaled.allam\AppData\Local\Google\Chrome\User Data and opened the Preferences file. Searching for "login" inside it, I found the extension ID nngceckbapebfimnlniiiahkandclblb, which corresponds to the Bitwarden browser extension. I then went to C:\Users\BTLOTest\Desktop\Artefacts\Poisoned Aid\C\Users\khaled.allam\AppData\Local\Google\Chrome\User Data\Default\Local Extension Settings\nngceckbapebfimnlniiiahkandclblb, opened the .ldb file, and searching for @ revealed the email 00darksideofme00@gmail.com.
+
+**A:** *00darksideofme00@gmail.com_AmT1redAlfr3d*
+
+![](./screenshots/Screenshot_13.png)
+![](./screenshots/Screenshot_14.png)
+![](./screenshots/Screenshot_15.png)
 
 ---
-
-## Timeline of Compromise
-*To be compiled once all findings are confirmed — chronological summary of initial access, decoy execution, staging, persistence, discovery/harvesting, and exfiltration.*
 
 ## Summary / Impact
-*To be written after all questions are answered — overview of attack chain, scope, and business impact.*
+
+Khaled was targeted with a spear-phishing email disguised as humanitarian aid coordination material. Opening the attachment silently launched a Python-based infostealer while a decoy PDF was displayed to avoid raising suspicion. The malware staged itself in a single, innocuous-looking directory (WindowsHelper) under AppData\Roaming, using PyArmor to obfuscate its code and blending malicious files in among legitimate-looking artifacts. Persistence was established almost immediately via a Scheduled Task, ensuring the payload would survive reboots or process termination.
+
+Once active, the module systematically enumerated Khaled's user directories - scanning 1,138 files across documents, configuration files, and credential stores - while tracking already-seen files in a local state database to avoid redundant uploads. Beyond file harvesting, the malware also captured clipboard and keystroke data, most notably intercepting Khaled's Bitwarden master credentials. This gave the attacker direct access to every account stored in his password manager - turning what began as a single endpoint compromise into a much broader identity and credential-exposure incident.
+
+In total, approximately 13 MB of sensitive data was exfiltrated over HTTP to attacker-controlled infrastructure (159.198.41.140, running nginx/1.24.0) via a dedicated /upload_file endpoint. Given the compromise of the password manager, the true blast radius of this incident extends well beyond the initial workstation and likely requires a full credential rotation across all of Khaled's stored accounts.
