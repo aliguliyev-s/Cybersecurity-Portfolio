@@ -137,7 +137,7 @@ A fairly tricky one. Searching inside the WindowsHelper directory, I found a fil
 
 ---
 
-## Summary / Impact
+## Summary
 
 Khaled was targeted with a spear-phishing email disguised as humanitarian aid coordination material. Opening the attachment silently launched a Python-based infostealer while a decoy PDF was displayed to avoid raising suspicion. The malware staged itself in a single, innocuous-looking directory (WindowsHelper) under AppData\Roaming, using PyArmor to obfuscate its code and blending malicious files in among legitimate-looking artifacts. Persistence was established almost immediately via a Scheduled Task, ensuring the payload would survive reboots or process termination.
 
