@@ -37,7 +37,7 @@ monitored by Suricata and Zeek.
 
 | #  | Scenario                                                      | Status         |
 |----|---------------------------------------------------------------|----------------|
-| 01 | [Nmap Reconnaissance](#scenario-01--nmap-reconnaissance)      | 🟡 In Progress |
+| 01 | [Nmap Reconnaissance](#scenario-01--nmap-reconnaissance)      | ✅ Complete |
 
 ---
 
