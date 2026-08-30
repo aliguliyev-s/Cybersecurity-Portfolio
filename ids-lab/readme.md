@@ -35,9 +35,9 @@ monitored by Suricata and Zeek.
 
 ##  Scenarios
 
-| #  | Scenario                                                    | Tools                  | Status         |
-|----|---------------------------------------------------------------|--------------------------|----------------|
-| 01 | [Nmap Reconnaissance](#scenario-01--nmap-reconnaissance)      | Suricata, Zeek, tshark   | 🟡 In Progress |
+| #  | Scenario                                                      | Status         |
+|----|---------------------------------------------------------------|----------------|
+| 01 | [Nmap Reconnaissance](#scenario-01--nmap-reconnaissance)      | 🟡 In Progress |
 
 ---
 
@@ -51,12 +51,40 @@ from the attacker host.
 **Attack commands:**
 
 ```bash
-# TCP SYN scan of all ports
 sudo nmap -sS -p- 192.168.56.101
-
-# Service version detection on open ports
-sudo nmap -sV 192.168.56.101
-
-# Aggressive scan
-sudo nmap -A 192.168.56.101
 ```
+
+**Before - no detection**
+
+![](./screenshots/Screenshot_2.png)
+
+The screenshot below shows the initial state before any custom rule
+was in place. The attacker (192.168.56.102) launches a
+TCP SYN scan against the sensor.
+tshark clearly captures the SYN packets hitting the target across
+multiple ports, confirming the scan traffic is present on the wire -
+but Suricata's fast.log stays empty. At this point Suricata had no
+signature capable of matching this specific behavior, so the scan went
+completely undetected despite being visible at the packet level.
+
+**After - custom detection rule**
+
+![](./screenshots/Screenshot_3.png)
+
+To close this gap, a custom rule was written to detect SYN-based port
+scanning based on connection rate rather than a single packet:
+
+```bash
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"Possible Nmap SYN Portscan"; tcp.flags:S; detection_filter: track by_src, count 30, seconds 5; sid:100001; rev:1;)
+```
+
+The rule triggers when a single source sends 30 or more SYN packets
+within a 5-second window toward the protected network
+($HOME_NET). Using detection_filter instead of alerting on every
+single SYN packet reduces noise and avoids flooding the log with one
+alert per port, while still reliably catching the scan as a pattern.
+After reloading Suricata and re-running the same *nmap -sS -p-*
+command, fast.log now shows the alert firing in real time,
+confirming the detection gap identified before has been
+closed.
+
