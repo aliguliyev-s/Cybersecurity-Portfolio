@@ -42,3 +42,11 @@ This portfolio documents real lab investigations, CTF writeups, and projects bui
 | # | Case | Tools | Status |
 |---|------|-------|--------|
 | 01 | [Injection Series Part 4](./Reverse-Engineering/btlo-injection-series-part-4/) | Ghidra | ✅ Complete |
+
+---
+
+### 🛡️ Intrusion Detection Systems
+
+| # | Case | Tools | Status |
+|---|------|-------|--------|
+| 01 | [Network Intrusion Detection](./ids-lab/) | Suricata, tshark, Zeek | In Progress |
