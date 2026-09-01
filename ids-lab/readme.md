@@ -166,7 +166,7 @@ had to continue manually using Zeek.
 The same pcap was then processed offline with Zeek, generating a set of connection and protocol
 logs for manual inspection.
 
-**dns.log — suspicious domains identified:**
+**dns.log - suspicious domains identified:**
 ![](./screenshots/Screenshot_9.png)
 ![](./screenshots/Screenshot_12.png)
 ![](./screenshots/Screenshot_13.png)
@@ -175,7 +175,7 @@ Reviewing `dns.log` revealed two suspicious domains being resolved
 during the capture. Both stood out as unlikely to be legitimate
 traffic based on their naming pattern and resolution behavior.
 
-**conn.log — correlating the IP:**
+**conn.log - correlating the IP:**
 ![](./screenshots/Screenshot_10.png)
 
 Cross-referencing `conn.log` surfaced a suspicious IP address
