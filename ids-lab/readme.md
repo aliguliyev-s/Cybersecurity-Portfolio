@@ -192,11 +192,10 @@ Filtering the pcap on the malicious IP and following the HTTP streams
 revealed the actual C2 protocol in use. Two distinct request types
 were observed:
 
-- `GET /api/client_hello` — a short initial check-in, likely used by
+- `GET /api/client_hello` - a short initial check-in, likely used by
   the malware to register with the C2 server.
-- `GET /avast_update` — despite the name imitating a legitimate
-  antivirus update (a common evasion technique to avoid raising
-  suspicion in network monitoring), this request triggers a large
+- `GET /avast_update` - despite the name imitating a legitimate
+  antivirus update, this request triggers a large
   multi-packet transfer, consistent with a stage-2 payload download.
 
 Both requests share the same suspicious `Host` header
