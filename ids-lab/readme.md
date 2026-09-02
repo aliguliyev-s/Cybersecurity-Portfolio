@@ -12,7 +12,6 @@ analysis.
 
 | Host              | IP              | Role                              |
 |-------------------|-----------------|-------------------------------------|
-| Windows 11        | 192.168.56.103  | Normal host                         |
 | Ubuntu Desktop    | 192.168.56.102  | Attacker                            |
 | Ubuntu Server     | 192.168.56.101  | Sensor: Suricata + Zeek + tshark    |
 
