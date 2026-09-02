@@ -357,3 +357,26 @@ wmiprvse.exe                      208
 ```
 
 This confirms the malware was performing full host reconnaissance and fingerprinting - collecting OS version, hardware, network configuration, and the running process list - and exfiltrating this data back to the C2 server as part of its ongoing task-reporting mechanism.
+
+**Closing the detection gap - custom rules:**
+
+Since Suricata's default ET Open ruleset did not flag any part of
+this traffic, four custom rules were written based on the indicators
+identified during manual analysis - the malicious domain, the
+malware's distinctive User-Agent, and the exfiltration endpoint:
+
+![](./screenshots/Screenshot_18.png)
+
+```bash
+alert http any any -> any any (msg: "Possible MetaStealer C2 - known malicious domain (wgcuwcgociewewoo.xyz)"; http.host; content: "wgcuwcgociewewoo.xyz"; sid: 100003; rev:1;)
+alert http any any -> any any (msg: "Possible MetaStealer C2 - known malicious domain (mmswgeewswyyywqk.xyz)"; http.host; content: "mmswgeewswyyywqk.xyz"; sid: 100004; rev:1;)
+alert http any any -> any any (msg: "Suspicious User-Agent - cpp-httplib"; http.user_agent; content: "cpp-httplib"; sid: 100005; rev:1;)
+alert http any any -> any any (msg: "Possible MetaStealer - exfiltration endpoint"; http.uri; content: "/tasks/collect"; sid: 100006; rev:1;)
+```
+
+After adding these rules and re-running the same pcap offline through
+Suricata, `fast.log` and `eve.json` now shows alerts firing for all three indicators,
+confirming that the detection gap identified earlier has been closed.
+
+![](./screenshots/Screenshot_19.png)
+![](./screenshots/Screenshot_20.png)
