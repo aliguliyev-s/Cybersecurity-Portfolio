@@ -38,7 +38,7 @@ monitored by Suricata and Zeek.
 |----|---------------------------------------------------------------|----------------|
 | 01 | Nmap Reconnaissance  | ✅ Complete |
 | 02 | SSH Brute-Force  | ✅ Complete |
-| 03 | Malware C2 traffic  | In progress |
+| 03 | Malware C2 traffic  | ✅ Complete |
 
 ---
 
