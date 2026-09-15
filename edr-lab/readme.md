@@ -95,7 +95,7 @@ to receive and decode Windows event log entries from Sysmon:
 
 ---
 
-**Alert detail — full event fields:**
+**Alert detail - full event fields:**
 
 ![](./screenshots/Screenshot_4.png)
 
