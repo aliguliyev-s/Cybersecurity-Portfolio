@@ -50,3 +50,10 @@ This portfolio documents real lab investigations, CTF writeups, and projects bui
 | # | Case | Tools | Status |
 |---|------|-------|--------|
 | 01 | [Network Intrusion Detection](./ids-lab/) | Suricata, tshark, Zeek | In Progress |
+
+### 🛡️ Endpoint Detection & Response
+
+| # | Case | Tools | Status |
+|---|------|-------|--------|
+| 01 | [Reverse Shell Detection via Wazuh + Sysmon](./edr-lab/wazuh-edr/) | Wazuh, Sysmon, Metasploit | ✅ Complete |
+| 02 | [SOAR EDR - LaZagne Detection + Automated Response](./edr-lab/soar-limacharlie/) | LimaCharlie, Tines, Slack | ✅ Complete |
